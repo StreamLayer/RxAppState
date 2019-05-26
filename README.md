@@ -4,8 +4,8 @@
 [![Platform](https://img.shields.io/cocoapods/p/RxAppState.svg?style=flat)](http://cocoapods.org/pods/RxAppState)
 [![Version](https://img.shields.io/cocoapods/v/RxAppState.svg?style=flat)](http://cocoapods.org/pods/RxAppState)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Swift](https://img.shields.io/badge/Swift-4.2-orange.svg?style=flat)](https://swift.org/)
-[![Xcode](https://img.shields.io/badge/xcode-10-5995EE.svg?style=flat)](https://developer.apple.com)
+[![Swift](https://img.shields.io/badge/Swift-5-orange.svg?style=flat)](https://swift.org/)
+[![Xcode](https://img.shields.io/badge/xcode-10.2-5995EE.svg?style=flat)](https://developer.apple.com)
 [![License](https://img.shields.io/cocoapods/l/RxAppState.svg?style=flat)](http://cocoapods.org/pods/RxAppState)
 [![Twitter](https://img.shields.io/badge/Twitter-@pixeldock-5E9FE5.svg?logo=twitter)](http://twitter.com/pixeldock)
 [![Blog](https://img.shields.io/badge/Blog-pixeldock-FF0066.svg?style=flat)](http://pixeldock.com/blog)
@@ -65,11 +65,26 @@ UIApplication.shared.rx.firstLaunchOnly
     })
     .disposed(by: disposeBag)
 ```
-You want to show your user a message when he opens the app for the first time after an update?
+You want to show your user what features are new when he opens the app for the first time after an update?
 
 ```swift
 UIApplication.shared.rx.firstLaunchOfNewVersionOnly
-    .subscribe(onNext: { _ in
+    .subscribe(onNext: { version in
+        let previousAppVersion = version.previous
+        let currentAppVersion = version.current
+        // show what has changed between
+        // the previous and the current version
+    })
+    .disposed(by: disposeBag)
+```
+
+You want check the previous and the current app version each time the user opens the app?
+
+```swift
+UIApplication.shared.rx.appVersion
+    .subscribe(onNext: { version in
+        let previousAppVersion = version.previous
+        let currentAppVersion = version.current
         // run your code
     })
     .disposed(by: disposeBag)
@@ -77,7 +92,7 @@ UIApplication.shared.rx.firstLaunchOfNewVersionOnly
 
 You want to keep track of how many times the user has opened your app? Simply do this:
 
-```
+```swift
 UIApplication.shared.rx.didOpenAppCount
     .subscribe(onNext: { count in
         print("app opened \(count) times")
@@ -127,18 +142,18 @@ There is a simple example project to demonstrate how to use RxAppDelegate.
 
 ## Requirements
 iOS 8 or greater    
-Swift 4.2  
-Xcode 10
+Swift 5  
+Xcode 10.2
 
-If you are using Swift 2.3 please use RxAppState version 0.2.0  
 If you are using Swift 3.x please use RxAppState version 0.3.4  
 If you are using Swift 4.0 please use RxAppState version 1.1.1  
-If you are using Swift 4.1 please use RxAppState version 1.1.2
+If you are using Swift 4.1 please use RxAppState version 1.1.2  
+If you are using Swift 4.2 please use RxAppState version 1.4.1
 
 
 ## Dependencies
-RxSwift 4.3  
-RxCocoa 4.3
+RxSwift 4.4  
+RxCocoa 4.4
 
 ## Integration
 ### CocoaPods
@@ -155,7 +170,7 @@ If Xcode complains about Swift versions add this to the end of your Podfile:
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '4.2'
+            config.build_settings['SWIFT_VERSION'] = '5.0'
         end
     end
 end
