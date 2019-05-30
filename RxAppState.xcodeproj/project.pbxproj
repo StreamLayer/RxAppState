@@ -14,9 +14,11 @@
 		082D76CF1EFBC2BE00A4E97B /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D76CD1EFBC2BE00A4E97B /* UIApplication+Rx.swift */; };
 		D8837EFC229F7B4300901C40 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8837EEB229F78B700901C40 /* RxSwift.framework */; };
 		D8837EFD229F7B4300901C40 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8837EEC229F78B700901C40 /* RxCocoa.framework */; };
-		D8837EFE229F7BC900901C40 /* RxAppState.h in Headers */ = {isa = PBXBuildFile; fileRef = 082D76BD1EFBC24400A4E97B /* RxAppState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8837F72229FAEAE00901C40 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8837F71229FAEAE00901C40 /* UIViewController+Rx.swift */; };
 		D8837F73229FAEAE00901C40 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8837F71229FAEAE00901C40 /* UIViewController+Rx.swift */; };
+		D8837F76229FB3E800901C40 /* RxApplicationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D76CC1EFBC2BE00A4E97B /* RxApplicationDelegateProxy.swift */; };
+		D8837F77229FB3E800901C40 /* UIApplication+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D76CD1EFBC2BE00A4E97B /* UIApplication+Rx.swift */; };
+		D8837F78229FB3E800901C40 /* RxAppState.h in Headers */ = {isa = PBXBuildFile; fileRef = 082D76BD1EFBC24400A4E97B /* RxAppState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,7 +113,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8837EFE229F7BC900901C40 /* RxAppState.h in Headers */,
+				D8837F78229FB3E800901C40 /* RxAppState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +227,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8837F76229FB3E800901C40 /* RxApplicationDelegateProxy.swift in Sources */,
+				D8837F77229FB3E800901C40 /* UIApplication+Rx.swift in Sources */,
 				D8837F73229FAEAE00901C40 /* UIViewController+Rx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
