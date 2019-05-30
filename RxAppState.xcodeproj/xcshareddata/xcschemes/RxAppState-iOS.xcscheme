@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "082D76B91EFBC24400A4E97B"
                BuildableName = "RxAppState.framework"
-               BlueprintName = "RxAppState"
+               BlueprintName = "RxAppState-iOS"
                ReferencedContainer = "container:RxAppState.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "082D76B91EFBC24400A4E97B"
             BuildableName = "RxAppState.framework"
-            BlueprintName = "RxAppState"
+            BlueprintName = "RxAppState-iOS"
             ReferencedContainer = "container:RxAppState.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,7 +65,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "082D76B91EFBC24400A4E97B"
             BuildableName = "RxAppState.framework"
-            BlueprintName = "RxAppState"
+            BlueprintName = "RxAppState-iOS"
             ReferencedContainer = "container:RxAppState.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
