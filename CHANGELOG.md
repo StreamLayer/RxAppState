@@ -1,5 +1,22 @@
 Changelog
 =========
+1.6.0
+-----
+- uses notifications to create the AppState observables. 
+- removes all the UIAppDelegate related stuff
+
+1.5.3
+-----
+- adds Swift Package Manager support. (thanks to [Sergey Kuleshov](https://github.com/svyatogor) for this contribution!)
+
+1.5.2
+-----
+- sets Swift version to 5.0
+
+1.5.1
+-----
+- updates dependencies to RxSwift 5.0
+
 1.5.0
 -----
 - updates to Swift 5
