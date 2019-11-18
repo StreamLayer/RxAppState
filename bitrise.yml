@@ -18,7 +18,7 @@ workflows:
             
             ### Cleanup, build, archive
             rm -rf ./Carthage/ ./DerivedData
-            carthage build --no-skip-current --platform "iOS,tvOS"
+            carthage build --no-skip-current
             zip -r $ARTIFACT ./Carthage/Build
 
             ### Generate release number
