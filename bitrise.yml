@@ -19,6 +19,7 @@ workflows:
             ### Cleanup, build, archive
             rm -rf ./Carthage/ ./DerivedData
             carthage build --no-skip-current
+            rm -rf Carthage/Build/*/Rx*.framework
             zip -r $ARTIFACT ./Carthage/Build
 
             ### Generate release number
