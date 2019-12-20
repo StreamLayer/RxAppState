@@ -1,0 +1,10 @@
+RxAppState-tvOS:
+  project: RxAppState.xcodeproj
+  sdks:
+  - appletvos
+  - appletvsimulator
+RxAppState-iOS:
+  project: RxAppState.xcodeproj
+  sdks:
+  - iphonesimulator
+  - iphoneos
