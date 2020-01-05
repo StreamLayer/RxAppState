@@ -12,7 +12,7 @@ import RxCocoa
 
 /**
  UIApplication states
- 
+
  There are two more app states in the Apple Docs ("Not running" and "Suspended").
  I decided to ignore those two states because there are no UIApplicationDelegate
  methods for those states.
@@ -86,7 +86,7 @@ public struct RxAppState {
 }
 
 extension RxSwift.Reactive where Base: UIApplication {
-    
+
     /**
      Keys for NSUserDefaults
      */
@@ -95,7 +95,7 @@ extension RxSwift.Reactive where Base: UIApplication {
         static var previousAppVersion: String { return "RxAppState_previousAppVersion" }
         static var currentAppVersion: String { return "RxAppState_currentAppVersion" }
     }
-    
+
     /**
      Reactive wrapper for `UIApplication.willEnterForegroundNotification`.
      */
@@ -125,7 +125,7 @@ extension RxSwift.Reactive where Base: UIApplication {
             return .background
         }
     }
-    
+
     /**
      Reactive wrapper for `UIApplication.willResignActiveNotification`.
      */
@@ -135,7 +135,7 @@ extension RxSwift.Reactive where Base: UIApplication {
             return .inactive
         }
     }
-    
+
     /**
      Reactive wrapper for `UIApplication.willTerminateNotification`.
      */
@@ -145,12 +145,12 @@ extension RxSwift.Reactive where Base: UIApplication {
             return .terminated
         }
     }
-    
+
     /**
      Observable sequence of the application's state
-     
+
      This gives you an observable sequence of all possible application states.
-     
+
      - returns: Observable sequence of AppStates
      */
     public var appState: Observable<AppState> {
@@ -163,20 +163,20 @@ extension RxSwift.Reactive where Base: UIApplication {
             )
             .merge()
     }
-    
+
     /**
      Observable sequence that emits a value whenever the user opens the app
-     
+
      This is a handy sequence if you want to run some code everytime
      the user opens the app.
      It ignores `applicationDidBecomeActive(_:)` calls when the app was not
      in the background but only in inactive state (because the user
      opened control center or received a call).
-     
+
      Typical use cases:
      - Track when the user opens the app.
      - Refresh data on app start
-     
+
      - returns: Observable sequence of Void
      */
     public var didOpenApp: Observable<Void> {
@@ -191,37 +191,37 @@ extension RxSwift.Reactive where Base: UIApplication {
                 return
         }
     }
-    
+
     /**
      Observable sequence that emits the number of times a user has opened the app
-     
+
      This is a handy sequence if you want to know how many times the user has opened your app
-     
+
      Typical use cases:
      - Ask a user to review your app after when he opens it for the 10th time
      - Track the number of times a user has opened the app
-     
+
      -returns: Observable sequence of Int
      */
     public var didOpenAppCount: Observable<Int> {
         return base._sharedRxAppState.didOpenAppCount
     }
-    
+
     /**
      Observable sequence that emits if the app is opened for the first time when the user opens the app
-     
+
      This is a handy sequence for all the times you want to run some code only
      when the app is launched for the first time
-     
+
      Typical use case:
      - Show a tutorial to a new user
-     
+
      -returns: Observable sequence of Bool
      */
     public var isFirstLaunch: Observable<Bool> {
         return base._sharedRxAppState.isFirstLaunch
     }
-    
+
     /**
      Observable sequence that emits the previous and the current app version string everytime
      the user opens the app
@@ -241,29 +241,29 @@ extension RxSwift.Reactive where Base: UIApplication {
     /**
      Observable sequence that emits if the app is opened for the first time after an app has updated when the user
      opens the app. This does not occur on first launch of a new app install. See `isFirstLaunch` for that.
-     
+
      This is a handy sequence for all the times you want to run some code only when the app is launched for the
      first time after an update.
-     
+
      Typical use case:
      - Show a what's new dialog to users, or prompt review or signup
-     
+
      -returns: Observable sequence of Bool
      */
     public var isFirstLaunchOfNewVersion: Observable<Bool> {
         return base._sharedRxAppState.isFirstLaunchOfNewVersion
     }
-    
+
     /**
      Observable sequence that emits the app's previous and the current version string if the app
      is opened for the first time after an update
-     
+
      This is a handy sequence for all the times you want to run some code only when a new version of the app
      is launched for the first time
-     
+
      Typical use case:
      - Show a what's new dialog to users, or prompt review or signup
-     
+
      -returns: Observable sequence of AppVersion
      */
     public var firstLaunchOfNewVersionOnly: Observable<AppVersion> {
@@ -273,64 +273,64 @@ extension RxSwift.Reactive where Base: UIApplication {
     /**
      Observable sequence that just emits one value if the app is opened for the first time
      or completes empty if the app has been opened before
-     
+
      This is a handy sequence for all the times you want to run some code only
      when the app is launched for the first time
-     
+
      Typical use case:
      - Show a tutorial to a new user
-     
+
      -returns: Observable sequence of Void
      */
     public var firstLaunchOnly: Observable<Void> {
         return base._sharedRxAppState.firstLaunchOnly
     }
-    
+
 }
 
 fileprivate struct _SharedRxAppState {
     typealias DefaultName = Reactive<UIApplication>.DefaultName
-    
+
     let rx: Reactive<UIApplication>
     let disposeBag = DisposeBag()
-    
+
     init(_ application: UIApplication) {
         rx = application.rx
         rx.didOpenApp
             .subscribe(onNext: updateAppStats)
             .disposed(by: disposeBag)
     }
-    
+
     private func updateAppStats() {
         let userDefaults = UserDefaults.standard
-        
+
         var count = userDefaults.integer(forKey: DefaultName.didOpenAppCount)
         count = min(count + 1, Int.max - 1)
         userDefaults.set(count, forKey: DefaultName.didOpenAppCount)
-        
+
         let previousAppVersion = userDefaults.string(forKey: DefaultName.currentAppVersion) ?? RxAppState.currentAppVersion
         let currentAppVersion = RxAppState.currentAppVersion
         userDefaults.set(previousAppVersion, forKey: DefaultName.previousAppVersion)
         userDefaults.set(currentAppVersion, forKey: DefaultName.currentAppVersion)
     }
-    
+
     lazy var didOpenAppCount: Observable<Int> = rx.didOpenApp
         .map { _ in
             return UserDefaults.standard.integer(forKey: DefaultName.didOpenAppCount)
         }
         .share(replay: 1, scope: .forever)
-    
+
     lazy var isFirstLaunch: Observable<Bool> = rx.didOpenApp
         .map { _ in
             let didOpenAppCount = UserDefaults.standard.integer(forKey: DefaultName.didOpenAppCount)
             return didOpenAppCount == 1
         }
         .share(replay: 1, scope: .forever)
-    
+
     lazy var firstLaunchOnly: Observable<Void> = rx.isFirstLaunch
         .filter { $0 }
         .map { _ in return }
-    
+
     lazy var appVersion: Observable<AppVersion> = rx.didOpenApp
         .map { _ in
             let userDefaults = UserDefaults.standard
@@ -339,12 +339,12 @@ fileprivate struct _SharedRxAppState {
             return AppVersion(previous: previousVersion, current: currentVersion)
         }
         .share(replay: 1, scope: .forever)
-    
+
     lazy var isFirstLaunchOfNewVersion: Observable<Bool> = appVersion
         .map { version in
             return version.previous != version.current
         }
-    
+
     lazy var firstLaunchOfNewVersionOnly: Observable<AppVersion> = appVersion
         .filter { $0.previous != $0.current }
 }

@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import UIKit
 
 /**
  ViewController view states
@@ -30,37 +31,37 @@ extension RxSwift.Reactive where Base: UIViewController {
         return methodInvoked(#selector(UIViewController.viewDidLoad))
             .map { _ in return }
     }
-    
+
     public var viewDidLayoutSubviews: Observable<Void> {
         return methodInvoked(#selector(UIViewController.viewDidLayoutSubviews))
             .map { _ in return }
     }
-    
+
     public var viewWillAppear: Observable<Bool> {
         return methodInvoked(#selector(UIViewController.viewWillAppear))
             .map { $0.first as? Bool ?? false }
     }
-    
+
     public var viewDidAppear: Observable<Bool> {
         return methodInvoked(#selector(UIViewController.viewDidAppear))
             .map { $0.first as? Bool ?? false }
     }
-    
+
     public var viewWillDisappear: Observable<Bool> {
         return methodInvoked(#selector(UIViewController.viewWillDisappear))
             .map { $0.first as? Bool ?? false }
     }
-    
+
     public var viewDidDisappear: Observable<Bool> {
         return methodInvoked(#selector(UIViewController.viewDidDisappear))
             .map { $0.first as? Bool ?? false }
     }
-    
+
     /**
      Observable sequence of the view controller's view state
-     
+
      This gives you an observable sequence of all possible states.
-     
+
      - returns: Observable sequence of AppStates
      */
     public var viewState: Observable<ViewControllerViewState> {

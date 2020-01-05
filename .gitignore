@@ -34,3 +34,6 @@ Carthage
 #
 # Pods/
 Example/Pods/
+node_modules/
+*.zip
+*.lock
