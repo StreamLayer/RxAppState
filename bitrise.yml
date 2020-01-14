@@ -31,7 +31,10 @@ workflows:
               --include ../RxSwift/rxswift.json \
               --include ../RxSwift/rxrelay.json \
               --include ../RxSwift/rxblocking.json \
-              --include ../RxSwift/rxtest.json
+              --include ../RxSwift/rxtest.json \
+              --rename slr:rx_appState \
+              --rename slr:rx_viewState \
+              --rename slr:rx_firstLaunch
 
             xcconfig=$(mktemp /tmp/static.xcconfig.XXXXXX)
             trap 'rm -f "$xcconfig"; git checkout -- "$DIR"' INT TERM HUP EXIT
@@ -41,7 +44,7 @@ workflows:
             echo "CLANG_ENABLE_MODULE_DEBUGGING = NO" >> $xcconfig
             echo "PRODUCT_NAME = ${PREFIX}${PRODUCT_NAME}" >> $xcconfig
             echo "PRODUCT_MODULE_NAME = ${PREFIX}${PRODUCT_NAME}" >> $xcconfig
-            echo "OTHER_LDFLAGS = -framework ${PREFIX}RxSwift -framework ${PREFIX}RxCocoa" >> $xcconfig
+            echo "OTHER_LDFLAGS = -framework ${PREFIX}RxSwift -framework ${PREFIX}RxCocoa -framework ${PREFIX}RxRelay" >> $xcconfig
             export XCODE_XCCONFIG_FILE="$xcconfig"
 
             yarn semantic-release
