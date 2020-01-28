@@ -4,6 +4,32 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
 
 workflows:
+  transform:
+    steps:
+    - script:
+        deps:
+          brew:
+          - name: streamlayer/formulas/prefixify
+      inputs:
+      - content: |-
+          #!/bin/bash
+
+          TMPDIR=$(mktemp -d)
+          cp -R $DIR $TMPDIR
+
+          swift-prefixify rewrite $TMPDIR/$DIR $PWD/$DIR \
+            --report $REPORT \
+            --prefix $PREFIX \
+            --product-name "$PRODUCT_NAME" \
+            --include ../RxSwift/rxcocoa.json \
+            --include ../RxSwift/rxswift.json \
+            --include ../RxSwift/rxrelay.json \
+            --include ../RxSwift/rxblocking.json \
+            --include ../RxSwift/rxtest.json \
+            --rename slr:rx_appState \
+            --rename slr:rx_viewState \
+            --rename slr:rx_firstLaunch
+
   deploy:
     steps:
     - script:
@@ -11,30 +37,13 @@ workflows:
           brew:
           - name: node
           - name: streamlayer/formulas/carthage
-          - name: streamlayer/formulas/prefixify
         inputs:
         - content: |-
             #!/bin/bash
-
             set -ex
 
             yarn add semantic-release @semantic-release/exec @semantic-release/git
-
-            TMPDIR=$(mktemp -d)
-            cp -R $DIR $TMPDIR
-
-            swift-prefixify rewrite $TMPDIR/$DIR $PWD/$DIR \
-              --report $REPORT \
-              --prefix $PREFIX \
-              --product-name "$PRODUCT_NAME" \
-              --include ../RxSwift/rxcocoa.json \
-              --include ../RxSwift/rxswift.json \
-              --include ../RxSwift/rxrelay.json \
-              --include ../RxSwift/rxblocking.json \
-              --include ../RxSwift/rxtest.json \
-              --rename slr:rx_appState \
-              --rename slr:rx_viewState \
-              --rename slr:rx_firstLaunch
+            bitrise run transform
 
             xcconfig=$(mktemp /tmp/static.xcconfig.XXXXXX)
             trap 'rm -f "$xcconfig"; git checkout -- "$DIR"' INT TERM HUP EXIT
