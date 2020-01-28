@@ -1,1 +1,1 @@
-{"identifiers":["ViewControllerViewState","AppState","RxAppState","RxApplicationDelegateProxy","AppVersion"],"products":["RxAppState"],"prefix":"SLR_","fnReplace":[]}
+{"identifiers":["RxApplicationDelegateProxy","RxAppState","AppVersion","ViewControllerViewState","AppState"],"products":["RxAppState"],"prefix":"SLR_","fnReplace":[]}
