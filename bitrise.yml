@@ -10,25 +10,25 @@ workflows:
         deps:
           brew:
           - name: streamlayer/formulas/prefixify
-      inputs:
-      - content: |-
-          #!/bin/bash
+        inputs:
+        - content: |-
+            #!/bin/bash
 
-          TMPDIR=$(mktemp -d)
-          cp -R $DIR $TMPDIR
+            TMPDIR=$(mktemp -d)
+            cp -R $DIR $TMPDIR
 
-          swift-prefixify rewrite $TMPDIR/$DIR $PWD/$DIR \
-            --report $REPORT \
-            --prefix $PREFIX \
-            --product-name "$PRODUCT_NAME" \
-            --include ../RxSwift/rxcocoa.json \
-            --include ../RxSwift/rxswift.json \
-            --include ../RxSwift/rxrelay.json \
-            --include ../RxSwift/rxblocking.json \
-            --include ../RxSwift/rxtest.json \
-            --rename slr:rx_appState \
-            --rename slr:rx_viewState \
-            --rename slr:rx_firstLaunch
+            swift-prefixify rewrite $TMPDIR/$DIR $PWD/$DIR \
+              --report $REPORT \
+              --prefix $PREFIX \
+              --product-name "$PRODUCT_NAME" \
+              --include ../RxSwift/rxcocoa.json \
+              --include ../RxSwift/rxswift.json \
+              --include ../RxSwift/rxrelay.json \
+              --include ../RxSwift/rxblocking.json \
+              --include ../RxSwift/rxtest.json \
+              --rename slr:rx_appState \
+              --rename slr:rx_viewState \
+              --rename slr:rx_firstLaunch
 
   deploy:
     steps:
