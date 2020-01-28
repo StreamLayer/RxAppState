@@ -32,9 +32,10 @@ workflows:
               --include ../RxSwift/rxrelay.json \
               --include ../RxSwift/rxblocking.json \
               --include ../RxSwift/rxtest.json \
-              --rename slr:rx_appState \
-              --rename slr:rx_viewState \
-              --rename slr:rx_firstLaunch
+              --rewrite slr:rx_appState \
+              --rewrite slr:rx_viewState \
+              --rewrite slr:rx_firstLaunch \
+              --rewrite slr:rx
 
             xcconfig=$(mktemp /tmp/static.xcconfig.XXXXXX)
             trap 'rm -f "$xcconfig"; git checkout -- "$DIR"' INT TERM HUP EXIT
